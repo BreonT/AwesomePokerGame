@@ -1,4 +1,4 @@
-﻿using AwesomePokerGameSln.Code;
+using AwesomePokerGameSln.Code;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +30,23 @@ namespace AwesomePokerGameSln {
       }
     }
 
+    //inserting function to check for wins and giving a default balance of $500 to player
+    int bal = 500;
+    int wins = 0;
+    int bet = 50;
+    private void checkWin(HandType x, HandType y)
+        {
+            if (radioButton1.Checked) { bet = 10; }
+            if (radioButton2.Checked) { bet = 50; }
+            Bet.Text = "Bet: $" + bet;
+
+            if (x > y) { handwinloss.Text = "Dealer Wins"; bal = bal - bet; }
+            if (y > x) { handwinloss.Text = "Player Wins"; wins++; bal = bal + bet; }
+            if (x == y) { handwinloss.Text = "Draw"; bal = bal + 0; }
+            Highscore.Text = "Hands won: " + wins.ToString();
+            Wallet.Text = "Wallet: $" + bal;
+        }
+
     private void dealCards() {
       deck.shuffleDeck();
       Tuple<int, int>[] cards = new Tuple<int, int>[5];
@@ -50,7 +67,24 @@ namespace AwesomePokerGameSln {
         dealerCardPic.BackgroundImage = CardImageHelper.cardToBitmap(card);
       }
       playerHand = new Hand(cards);
-      lblHandType.Text = playerHand.getHandType().ToString();
+      lblHandType.Text = "P: " + playerHand.getHandType().ToString();
+      Dlhandtype.Text = "D: " + dealerHand.getHandType().ToString();
+            //call for checkWin function
+      checkWin(playerHand.getHandType(), dealerHand.getHandType());
+      if (bal == 0)
+            {
+                button1.Enabled = false;
+            }
+      
+      
+            //code that's probably useless now
+            /*if (playerHand.getHandType() < dealerHand.getHandType())
+            {
+                handwinloss.Text = "Player win";
+            }
+            else
+                handwinloss.Text = "Player Lose";*/
+
     }
 
     private void FrmPlaygame_FormClosed(object sender, FormClosedEventArgs e) {
@@ -62,9 +96,12 @@ namespace AwesomePokerGameSln {
       deck = new Deck();
       dealCards();
     }
-
+        
+    
     private void button1_Click(object sender, EventArgs e) {
       dealCards();
+     
+            
     }
   }
 }
