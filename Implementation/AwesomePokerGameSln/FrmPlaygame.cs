@@ -41,7 +41,10 @@ namespace AwesomePokerGameSln {
             Bet.Text = "Bet: $" + bet;
 
             if (x > y) { handwinloss.Text = "Dealer Wins"; bal = bal - bet; }
-            if (y > x) { handwinloss.Text = "Player Wins"; wins++; bal = bal + bet; }
+            if (y > x) { 
+              handwinloss.Text = "Player Wins"; wins++; bal = bal + bet;
+              sound();
+                       }
             if (x == y) { handwinloss.Text = "Draw"; bal = bal + 0; }
             Highscore.Text = "Hands won: " + wins.ToString();
             Wallet.Text = "Wallet: $" + bal;
@@ -100,8 +103,13 @@ namespace AwesomePokerGameSln {
     
     private void button1_Click(object sender, EventArgs e) {
       dealCards();
-     
-            
+    
+    //Adds a .wav (sound) to the program
+    private void sound(){
+            var music = new System.Media.SoundPlayer();
+            music.SoundLocation = @"Machintosh HD/Users/shristirayamajhi/Desktop/play1.wav"
+            music.Play();
+            }        
     }
   }
 }
