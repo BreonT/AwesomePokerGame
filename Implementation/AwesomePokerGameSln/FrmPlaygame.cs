@@ -31,20 +31,18 @@ namespace AwesomePokerGameSln {
     }
 
     //inserting function to check for wins and giving a default balance of $500 to player
-    int bal = 350;
+    int bal = 500;
     int wins = 0;
     int bet = 50;
-    private void checkWin(HandType x, HandType y)
+    //System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"c:\shootingstar.wav");
+        private void checkWin(HandType x, HandType y)
         {
             if (radioButton1.Checked) { bet = 10; }
             if (radioButton2.Checked) { bet = 50; }
             Bet.Text = "Bet: $" + bet;
 
             if (x > y) { handwinloss.Text = "Dealer Wins"; bal = bal - bet; }
-            if (y > x) { 
-              handwinloss.Text = "Player Wins"; wins++; bal = bal + bet;
-              sound();
-                       }
+            if (y > x) { handwinloss.Text = "Player Wins"; wins++; bal = bal + bet; //player.Play(); }
             if (x == y) { handwinloss.Text = "Draw"; bal = bal + 0; }
             Highscore.Text = "Hands won: " + wins.ToString();
             Wallet.Text = "Wallet: $" + bal;
@@ -103,13 +101,12 @@ namespace AwesomePokerGameSln {
     
     private void button1_Click(object sender, EventArgs e) {
       dealCards();
-    
-    //Adds a .wav (sound) to the program
-    private void sound(){
-            var music = new System.Media.SoundPlayer();
-            music.SoundLocation = @"Machintosh HD/Users/shristirayamajhi/Desktop/play1.wav"
-            music.Play();
-            }        
+                using (var soundPlayer = new SoundPlayer(@"C:\Users\Breon\Desktop\shootingstar.wav"))
+                {
+                    soundPlayer.Play();
+                }
+      
+            
     }
   }
 }
