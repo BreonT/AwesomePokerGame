@@ -31,7 +31,7 @@ namespace AwesomePokerGameSln {
     }
 
     //inserting function to check for wins and giving a default balance of $500 to player
-    int bal = 500;
+    int bal = 350;
     int wins = 0;
     int bet = 50;
     private void checkWin(HandType x, HandType y)
